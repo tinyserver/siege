@@ -1,3 +1,0 @@
-# 1) exit with non-zero value
-
-exit(1);

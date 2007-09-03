@@ -1,3 +1,0 @@
-# 1) try to instantiate undefined template
-
-a = new foo();

@@ -1,3 +1,0 @@
-# 1) static method call for undefined template
-
-foo::foo();
