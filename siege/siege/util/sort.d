@@ -1,3 +1,7 @@
+/**
+    \brief Sorting functions
+    \todo cleanup and document
+*/
 module siege.util.sort;
 
 private
@@ -20,24 +24,24 @@ unittest
 	 17.6, 18.0, 0.5, 0.0, 5.5, 6.0, 21.0, 21.0, 12.5, 16.0, 9.0, 20.5
 	];
 	BSort!(float) sortlist = new BSort!(float)(7,n);
-	
+
 	sortlist.Sort(numbers.ptr,n);
 	writefln("-----------------------");
 	writefln("BSort unittest:");
 	writefln("-----------------------");
-	for ( uint i = 0; i < n; i++ ) 
+	for ( uint i = 0; i < n; i++ )
 	{
 		writefln(numbers[i]);
 	}
 	writefln("-----------------------");
 	writefln("");
-	
+
 	delete sortlist;
 }
 */
 
 /**
-Bucket sort template 
+Bucket sort template
 **/
 
 class BSort(T)
@@ -76,7 +80,7 @@ class BSort(T)
 		if ( buckets !is null ) delete buckets;
 		if ( element_heap !is null ) delete element_heap;
 	}
-	
+
 protected:
 	struct SListConstant
 	{
@@ -115,19 +119,19 @@ protected:
 		// make a list of pointers to the category elements.
 		buckets = new CListHeader[N_Buckets];
 		//memset(buckets,0,sizeof(CListHeader)*(N_Buckets));
-		// 
+		//
 		element_heap = new  SListConstant[N + N_Buckets];
 		//memset(element_heap,0,sizeof(SListConstant)*(N + N_Buckets));
 		// make a heap for element allocation.
 		heap_ptr = element_heap.ptr;
 		{ // Initialize a set of category elements. { One element for each category. }
 			ulong i;
-			for ( i = 0; i < N_Buckets; i++ ) 
+			for ( i = 0; i < N_Buckets; i++ )
 			{
-				// Each class is a list. The heap element 
+				// Each class is a list. The heap element
 				buckets[i].last = buckets[i].first = heap_ptr;
 				InitMinMax(buckets[i].min,buckets[i].max);
-				if ( prev_bucket_class !is null ) 
+				if ( prev_bucket_class !is null )
 				{
 					prev_bucket_class.next = &buckets[i];
 				}
@@ -141,10 +145,10 @@ protected:
 		c_min = T.max;
 		c_max = -T.max;
 	}
-	ulong TShift(double d) 
+	ulong TShift(double d)
 	{
 		ulong i;
-	
+
 		i = cast(ulong)( fabs((d - (*lower_b))/bucket_delta) );
 		return(i);
 	}
@@ -153,11 +157,11 @@ protected:
 		T first, second;
 		first = buf_start[0];
 		second = buf_start[1];
-		
+
 		if ( first > second )  // First is bigger than second, so swap
 		{
 			buf_start[0] = second;
-			buf_start[1] = first;	
+			buf_start[1] = first;
 		}
 	}
 	void SmallSectionSort3(T *buf_start)
@@ -166,40 +170,40 @@ protected:
 		first = buf_start[0];
 		second = buf_start[1];
 		third = buf_start[2];
-		
+
 		if ( first > second ) // First is bigger than second, so swap
-		{ 
+		{
 			buf_start[0] = second;
-			buf_start[1] = first;	
+			buf_start[1] = first;
 			first = buf_start[0]; // Reassign for next comparison.
 			second = buf_start[1];
 		}
-		
+
 		if ( second > third ) // First is bigger than second, so swap
 		{
 			buf_start[1] = third;
 			buf_start[2] = second;
 			second = third;
-			if ( first > second ) 
+			if ( first > second )
 			{
 				buf_start[0] = second;
-				buf_start[1] = first;	
+				buf_start[1] = first;
 			}
 		}
 	}
-	
+
 	void SmallSectionSort4(T *buf_start)
 	{
 		SmallSectionSort2(buf_start);
 		SmallSectionSort2(buf_start + 2);
 		{
 			T second, third;
-	
+
 			second = buf_start[1];
 			third = buf_start[2];
-	
+
 			if ( second <= third ) return;
-	
+
 			buf_start[1] = third;
 			buf_start[2] = second;
 			SmallSectionSort4(buf_start);
@@ -220,18 +224,18 @@ protected:
 			if ( bucket_delta == 0 ) bucket_delta = 1;
 		}
 		{
-			// SORT SHORT SECTIONS IN A BRUTE FORCE WAY.	
-			
-			if (  sect_size <= 4 ) // This is a stopping condition. 
-			{ 
-					
-				if ( sect_size == 2 ) 
+			// SORT SHORT SECTIONS IN A BRUTE FORCE WAY.
+
+			if (  sect_size <= 4 ) // This is a stopping condition.
+			{
+
+				if ( sect_size == 2 )
 				{
 					SmallSectionSort2(buf_start);
-				} else if ( sect_size == 3 ) 
+				} else if ( sect_size == 3 )
 				{
 					SmallSectionSort3(buf_start);
-				} else if ( sect_size == 4 ) 
+				} else if ( sect_size == 4 )
 				{
 					SmallSectionSort4(buf_start);
 				}
@@ -244,7 +248,7 @@ protected:
 		SListConstant	*heap_ptr;
 		T		*b_start = buf_start;
 		// Sectbuf stores the end points of the sections of data which
-		// arise from the classes being reassembled. Only sections with 
+		// arise from the classes being reassembled. Only sections with
 		// data are stored, but sectbuf is made large enough to handle
 		// the eventuality of all the characters being represented.
 		bucket_info	[]sectbuf = new bucket_info[(N_Buckets + 1)];
@@ -260,17 +264,17 @@ protected:
 			SListConstant *el;
 			CListHeader *bucket;
 			ulong ith_bucket;
-			while ( buf_start < buf_end ) 
+			while ( buf_start < buf_end )
 			{
 				c = *buf_start++;  // Pointer data string.
 				ith_bucket = TShift(c);
-				
+
 				// Get the last element of the class, which is allocated
 				// for receipt of the next data element.
 				bucket = &buckets[ith_bucket];
 				el = bucket.last;		// This is a preparatory pointer.
 				el.data = c;			// add data point to class.
-				
+
 				// Append to where the next element will go.
 				el.next = heap_ptr++;	// Append only.
 				bucket.last = el.next;
@@ -280,25 +284,25 @@ protected:
 			}
 		}
 		buf_start = b_start; // reset buf_start;
-		
+
 		{	// Reassemble the list.
 			CListHeader *h;
 			h = buckets.ptr; // First of classes.
 			// Walk list of classes.
-			while ( h ) 
+			while ( h )
 			{
 				SListConstant *el = h.first;
 				SListConstant *last_el = h.last;
 				if ( el != last_el ) // Not an empty class
-				{ 
+				{
 					h.last = h.first; // Empty the class for reuse.
 					sectbufptr.min = h.min;
 					sectbufptr.max = h.max;
 					InitMinMax(h.min,h.max);
 					sectbufptr.section = buf_start;
 					sectbufptr++; // Prepare next level
-					
-					while ( el != last_el ) 
+
+					while ( el != last_el )
 					{
 						*buf_start++ = el.data; // Write element into its new location.
 						el = el.next;
@@ -307,13 +311,13 @@ protected:
 				h = h.next; // Next class
 			}
 		}
-		sectbufptr.section = buf_start; // Get last pointer.	
+		sectbufptr.section = buf_start; // Get last pointer.
 		endsects = sectbufptr-1;
 		sectbufptr = sectbuf.ptr;
 		/*
 			RECURSE RIGHT HERE.
 		*/
-		while ( sectbufptr < endsects ) 
+		while ( sectbufptr < endsects )
 		{
 			// Notice that end point pairs are formed from two first of sections
 			// until the last pointer is used.
@@ -322,9 +326,9 @@ protected:
 			*lower_b = sectbufptr.min;
 			sectbufptr++;
 			buf_end = sectbufptr.section;
-			
+
 			if ( ( cast(ulong)(buf_end) - cast(ulong)(buf_start) ) == T.sizeof ) continue;
-	
+
 			if ( (*upper_b) == (*lower_b) ) continue;
 			// two or more elements.
 			BucketSort(buf_start, buf_end, (depth + 1));
@@ -339,8 +343,8 @@ protected:
 		T *end = el + n;
 		T dmin, dmax;
 		InitMinMax(dmin,dmax);
-		
-		while ( el < end ) 
+
+		while ( el < end )
 		{
 			T d = *el++;
 			if ( d < dmin ) dmin = d;
@@ -354,9 +358,9 @@ public:
 	{
 		T *buf_start;
 		T *buf_end;
-		// x is the list of data to be sorted. The list is a list of character 
+		// x is the list of data to be sorted. The list is a list of character
 		// arrays.
-		if ( !has_bounds ) 
+		if ( !has_bounds )
 		{
 			GetMinMax(x,lower_b,upper_b,n);
 		}
