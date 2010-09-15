@@ -348,7 +348,7 @@ void SG_EXPORT sgEntityDestroy(SGEntity* entity)
 
     if(entity->evDestroy != NULL)
         entity->evDestroy(entity);
-    
+
     sgLinkedListRemoveItem(_sg_cList, entity);
     sgEventDestroy(entity->event);
 
@@ -400,14 +400,14 @@ SGPhysicsBody* SG_EXPORT sgEntityGetPhysicsBody(SGEntity* entity)
     return entity->body;
 }
 
-void SG_EXPORT sgEntitySetSource(SGEntity* entity, SGSource* source)
+void SG_EXPORT sgEntitySetAudioSource(SGEntity* entity, SGAudioSource* source)
 {
     if(entity == NULL)
         return;
 
     entity->source = source;
 }
-SGSource* SG_EXPORT sgEntityGetSource(SGEntity* entity)
+SGAudioSource* SG_EXPORT sgEntityGetAudioSource(SGEntity* entity)
 {
     if(entity == NULL)
         return NULL;
