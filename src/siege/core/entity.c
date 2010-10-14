@@ -1,13 +1,13 @@
 /*
     Copyright (c) 2007 SIEGE Development Team
     All rights reserved.
-    
+
     This file is part of libSIEGE.
-    
+
     This software is copyrighted work licensed under the terms of the
     2-clause BSD license. Please consult the file "license.txt" for
     details.
-    
+
     If you did not recieve the file with this program, please email
     Tim Chas <darkuranium@gmail.com>.
 */
@@ -24,17 +24,17 @@
 
 SGbool SG_EXPORT _sgEntityInit(void)
 {
-    _sg_cList = sgPLinkedListCreate(SG_PLIST_HFO);
+    _sg_cList = sgPListCreate(SG_PLIST_HFO);
     if(_sg_cList != NULL)
         return SG_TRUE;
     return SG_FALSE;
 }
 SGbool SG_EXPORT _sgEntityDeinit(void)
 {
-    //SGPLinkedNode* node;
+    //SGPListNode* node;
     //for(node = _sg_cList->first; node != NULL; node = node->next)
     //    free(node);
-    sgLinkedListDestroy(_sg_cList);
+    sgListDestroy(_sg_cList);
     return SG_TRUE;
 }
 
@@ -352,7 +352,7 @@ SGEntity* SG_EXPORT sgEntityCreate(float priority, SGenum type)
 
     entity->evDraw = _sg_evDraw;
 
-    sgPLinkedListInsertPriority(_sg_cList, priority, entity);
+    sgPListInsertPriority(_sg_cList, priority, entity);
     return entity;
 }
 void SG_EXPORT sgEntityDestroy(SGEntity* entity)
@@ -363,7 +363,7 @@ void SG_EXPORT sgEntityDestroy(SGEntity* entity)
     if(entity->evDestroy != NULL)
         entity->evDestroy(entity);
 
-    sgLinkedListRemoveItem(_sg_cList, entity);
+    sgListRemoveItem(_sg_cList, entity);
     sgEventDestroy(entity->event);
 
     free(entity);

@@ -1,13 +1,13 @@
 /*
     Copyright (c) 2007 SIEGE Development Team
     All rights reserved.
-    
+
     This file is part of libSIEGE.
-    
+
     This software is copyrighted work licensed under the terms of the
     2-clause BSD license. Please consult the file "license.txt" for
     details.
-    
+
     If you did not recieve the file with this program, please email
     Tim Chas <darkuranium@gmail.com>.
 */
@@ -21,17 +21,17 @@
 
 SGbool SG_EXPORT _sgEventInit(void)
 {
-    _sg_evList = sgPLinkedListCreate(SG_PLIST_HFO);
+    _sg_evList = sgPListCreate(SG_PLIST_HFO);
     if(_sg_evList != NULL)
         return SG_TRUE;
     return SG_FALSE;
 }
 SGbool SG_EXPORT _sgEventDeinit(void)
 {
-    //SGPLinkedNode* node;
+    //SGPListNode* node;
     //for(node = _sg_evList->first; node != NULL; node = node->next)
     //    free(node);
-    sgLinkedListDestroy(_sg_evList);
+    sgListDestroy(_sg_evList);
     return SG_TRUE;
 }
 SGEvent* SG_EXPORT sgEventCreate(float priority, SGenum type, void* data, SGEventCall func)
@@ -41,19 +41,19 @@ SGEvent* SG_EXPORT sgEventCreate(float priority, SGenum type, void* data, SGEven
     event->type = type;
     event->data = data;
     event->func = func;
-    sgPLinkedListInsertPriority(_sg_evList, priority, event);
+    sgPListInsertPriority(_sg_evList, priority, event);
     return event;
 }
 void SG_EXPORT sgEventDestroy(SGEvent* event)
 {
-    sgLinkedListRemoveItem(_sg_evList, event);
+    sgListRemoveItem(_sg_evList, event);
 }
 void SG_EXPORT sgEventCall(SGenum type, void* args)
 {
     _sg_evStop = SG_FALSE;
     SGbool cont = SG_TRUE;
     SGEvent* event;
-    SGPLinkedNode* node;
+    SGPListNode* node;
     for(node = _sg_evList->first; (node != NULL) && cont; node = node->next)
     {
         if(_sg_evStop)
