@@ -1,13 +1,13 @@
 /*
     Copyright (c) 2007 SIEGE Development Team
     All rights reserved.
-    
+
     This file is part of libSIEGE.
-    
+
     This software is copyrighted work licensed under the terms of the
     2-clause BSD license. Please consult the file "license.txt" for
     details.
-    
+
     If you did not recieve the file with this program, please email
     Tim Chas <darkuranium@gmail.com>.
 */
@@ -58,7 +58,7 @@ SGSprite* SG_EXPORT sgSpriteCreateTexture(SGTexture* texture)
 {
     return sgSpriteCreateTexture2f(texture, SG_NAN, SG_NAN);
 }
-SGSprite* SG_EXPORT sgSpriteCreateFile2f(char* fname, float xoffset, float yoffset)
+SGSprite* SG_EXPORT sgSpriteCreateFile2f(const char* fname, float xoffset, float yoffset)
 {
     SGTexture* texture = sgTextureCreateFile(fname);
     if(texture == NULL)
@@ -72,7 +72,7 @@ SGSprite* SG_EXPORT sgSpriteCreateFile2f(char* fname, float xoffset, float yoffs
     sprite->extimages = SG_FALSE;
     return sprite;
 }
-SGSprite* SG_EXPORT sgSpriteCreateFile(char* fname)
+SGSprite* SG_EXPORT sgSpriteCreateFile(const char* fname)
 {
     return sgSpriteCreateFile2f(fname, SG_NAN, SG_NAN);
 }
