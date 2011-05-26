@@ -136,7 +136,7 @@ SGbool SG_EXPORT _sgFontLoad(SGFont* font, SGdchar* chars, SGuint numchars, SGbo
 	return SG_TRUE;
 }
 SGubyte* SG_EXPORT _sgFontToRGBA(SGFont* font, SGubyte* data, SGuint datalen)
-{
+{	
 	SGuint i;
 	SGubyte* newData = malloc(datalen * 4);
 	for(i = 0; i < datalen; i++)
