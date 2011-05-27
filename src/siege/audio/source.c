@@ -110,6 +110,10 @@ SGAudioSource* SG_EXPORT sgAudioSourceCreate(float priority, float volume, float
         free(source);
         return NULL;
     }
+    
+    sgAudioSourceSetVolume(source, volume);
+    sgAudioSourceSetPitch(source, pitch);
+    sgAudioSourceSetLooping(source, looping);
 
     return source;
 }

@@ -28,14 +28,6 @@ struct SGMask;
 struct SGPhysicsBody;
 struct SGAudioSource;
 
-// employs an EventClient wrapper over the "generalized" events above
-typedef struct _SGEntityCall
-{
-	SGuint num;
-	SGenum* types;
-	void** args;
-} _SGEntityCall;
-
 /**
  * \ingroup Core
  * \brief Entity, the main game "class"
@@ -155,10 +147,10 @@ typedef struct SGEntity
 	/**
 	 * \private
 	 * \brief Entity's angle in radians
-	 * 
+	 *
 	 * \note
 	 *	Not used if a body is attached.
-	 * 
+	 *
 	 * \warning
 	 *	For internal use only.
 	 */
@@ -176,7 +168,7 @@ typedef struct SGEntity
 	/// \brief Return SG_TRUE if the point is inside, SG_FALSE otherwise
 	/// \todo Rename to cbPointInside, cbIsInside...?
 	SGbool SG_EXPORT (*cbInside)(struct SGEntity* entity, float x, float y);
-	
+
 	/// \brief Called when the entity is about to be destroyed
 	SGvoid SG_EXPORT (*lcDestroy)(struct SGEntity* entity);
 
@@ -184,7 +176,7 @@ typedef struct SGEntity
 	/// \todo Should this do the tests for depth?
 	SGvoid SG_EXPORT (*lcMouseEnter)(struct SGEntity* entity);
 	SGvoid SG_EXPORT (*lcMouseExit)(struct SGEntity* entity);
-	
+
 	SGvoid SG_EXPORT (*lcMouseButton)(struct SGEntity* entity, SGuint button);
 	SGvoid SG_EXPORT (*lcMouseButtonPress)(struct SGEntity* entity, SGuint button);
 	SGvoid SG_EXPORT (*lcMouseButtonRelease)(struct SGEntity* entity, SGuint button);
@@ -469,7 +461,7 @@ typedef struct SGEntity
 	/// @}
 } SGEntity;
 
-SGbool SG_EXPORT _sg_evCall(SGEntity* entity, _SGEntityCall* call);
+SGbool SG_EXPORT _sg_evCall(SGEntity* entity, va_list args);
 SGvoid SG_EXPORT _sg_evDraw(SGEntity* entity);
 
 SGbool SG_EXPORT _sgEntityInit(void);
@@ -583,10 +575,10 @@ struct SGAudioSource* SG_EXPORT sgEntityGetAudioSource(SGEntity* entity);
  * \param entity The entity of which position we want to set
  * \param[in] x X position
  * \param[in] y Y position
- * 
+ *
  * \note
  *	If a physical body is attached, its position will get changed.
- * 
+ *
  * \sa
  *	sgEntityGetPos
  *	sgEntitySetPosX
@@ -634,10 +626,10 @@ void SG_EXPORT sgEntitySetPosX(SGEntity* entity, float x);
  * \return The x position
  *
  * This function gets only the x position of the entity. Note that it is more efficient to use \ref sgEntityGetPos "sgEntityGetPos" if both coordinates are required.
- * 
+ *
  * \note
  *	If a physical body is attached, this function returns its position.
- * 
+ *
  * \sa
  *	sgEntitySetPosX
  *	sgEntityGetPos
@@ -655,7 +647,7 @@ float SG_EXPORT sgEntityGetPosX(SGEntity* entity);
  *
  * \note
  *	If a physical body is attached, its position will get changed.
- * 
+ *
  * \sa
  *	sgEntityGetPosY
  *	sgEntitySetPos
@@ -669,10 +661,10 @@ void SG_EXPORT sgEntitySetPosY(SGEntity* entity, float y);
  * \return The y position
  *
  * This function gets only the y position of the entity. Note that it is more efficient to use \ref sgEntityGetPos "sgEntityGetPos" if both coordinates are required.
- * 
+ *
  * \note
  *	If a physical body is attached, this function returns its position.
- * 
+ *
  * \sa
  *	sgEntitySetPosY
  *	sgEntityGetPos
@@ -717,7 +709,7 @@ float SG_EXPORT sgEntityGetDepth(SGEntity* entity);
  * \brief Set the entity's angle in radians
  * \param entity The entity of which the angle we want to set
  * \param[in] rads The angle in radians
- * 
+ *
  * \note
  *	If a physical body is attached, then the orientation of the body is changed.
  *
@@ -731,7 +723,7 @@ void SG_EXPORT sgEntitySetAngleRads(SGEntity* entity, float rads);
  * \brief Get the entity's angle in radians
  * \param entity The entity of which the angle we want to get
  * \return The angle in radians
- * 
+ *
  * \note
  *	If a physical body is attached, then the orientation of the body is returned.
  *
@@ -745,7 +737,7 @@ float SG_EXPORT sgEntityGetAngleRads(SGEntity* entity);
  * \brief Set the entity's angle in degrees
  * \param entity The entity of which the angle we want to set
  * \param[in] degs The angle in degrees
- * 
+ *
  * \note
  *	If a physical body is attached, then the orientation of the body is changed.
  *
