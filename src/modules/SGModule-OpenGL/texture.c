@@ -20,7 +20,7 @@
 #include <math.h>
 
 SGuint SG_EXPORT sgmGraphicsTextureCreate(void** texture, void* context)
-{
+{    
     TextureData** tdata = (TextureData**)texture;
     *tdata = calloc(1, sizeof(TextureData));
 
