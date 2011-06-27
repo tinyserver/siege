@@ -34,7 +34,7 @@ SGuint SG_EXPORT sgmModuleInit(SGModuleInfo** minfo)
     (*minfo)->name = "Chipmunk";
 
     cpInitChipmunk();
-
+    
     return SG_OK;
 }
 
