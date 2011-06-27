@@ -59,6 +59,8 @@ void SG_EXPORT _sgModuleLoadGraphics(SGLibrary* lib)
 	_SG_BIND(sgmGraphicsTextureFreeData);
 	_SG_BIND(sgmGraphicsTextureGetSize);
 	_SG_BIND(sgmGraphicsTextureDraw);
+    
+    _SG_BIND(sgmGraphicsTextureSetWrap);
 
 	_SG_BIND(sgmGraphicsDrawPrimitive);
 	_SG_BIND(sgmGraphicsDrawSetColor);
