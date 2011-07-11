@@ -22,7 +22,7 @@
 #include <string.h>
 
 void mouseButton(int button, int action)
-{
+{	
     if(button == 2)
         button = 3;
     else if(button == 3)
