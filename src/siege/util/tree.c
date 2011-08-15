@@ -71,7 +71,7 @@ SGTreeNode* SG_EXPORT _sgTreeNodeInsert(SGTree* tree, SGTreeNode* root, SGTreeNo
     SGTreeNode* stack[256];
     ptrdiff_t top;
     int cmp;
-    
+
     if(!root)
         root = node;
     else
@@ -83,34 +83,34 @@ SGTreeNode* SG_EXPORT _sgTreeNodeInsert(SGTree* tree, SGTreeNode* root, SGTreeNo
         {
             stack[top++] = curr;
             cmp = tree->cmp(curr->item, node->item);
-            
+
             if(!cmp)
                 break;
             else if((cmp < 0) ? !curr->right : !curr->left)
                 break;
             curr = (cmp < 0) ? curr->right : curr->left;
         }
-        
+
         if(cmp == 0)
         {
             curr->item = node->item;
             free(node);
             return root;
         }
-        
+
         if(cmp < 0)
             curr->right = node;
         else
             curr->left = node;
-        
+
         while(--top >= 0)
         {
             if(top)
                 cmp = (stack[top - 1]->right == stack[top]) ? -1 : 1;
-            
+
             stack[top] = _sgTreeNodeSkew(stack[top]);
             stack[top] = _sgTreeNodeSplit(stack[top]);
-            
+
             if(top)
             {
                 if(cmp < 0)
@@ -144,10 +144,10 @@ SGTreeNode* SG_EXPORT _sgTreeNodeRemove(SGTree* tree, SGTreeNode* root, SGTreeNo
         while(1)
         {
             stack[top++] = curr;
-            
+
             if(!curr)
                 return root;
-            
+
             tcmp = tree->cmp(curr->item, node->item);
             if(!tcmp)
                 break;
@@ -157,7 +157,7 @@ SGTreeNode* SG_EXPORT _sgTreeNodeRemove(SGTree* tree, SGTreeNode* root, SGTreeNo
             else
                 curr = curr->left;
         }
-        
+
         if(!curr->left || !curr->right)
         {
             if(--top)
@@ -175,13 +175,13 @@ SGTreeNode* SG_EXPORT _sgTreeNodeRemove(SGTree* tree, SGTreeNode* root, SGTreeNo
         {
             heir = curr->right;
             prev = curr;
-            
+
             while(heir->left)
             {
                 stack[top++] = prev = heir;
                 heir = heir->left;
             }
-            
+
             curr->item = heir->item;
             if(prev == curr)
                 prev->right = heir->right;
@@ -189,21 +189,21 @@ SGTreeNode* SG_EXPORT _sgTreeNodeRemove(SGTree* tree, SGTreeNode* root, SGTreeNo
                 prev->left = heir->right;
             remove = heir;
         }
-        
+
         while(--top >= 0)
-        {            
+        {
             if(top)
                 cmp = (stack[top - 1]->right == stack[top]) ? -1 : 1;
-            
+
             llevel = stack[top]->left ? stack[top]->left->level : 0;
             rlevel = stack[top]->right ? stack[top]->right->level : 0;
-            
+
             if(llevel < stack[top]->level - 1
             || rlevel < stack[top]->level - 1)
             {
                 if(rlevel > --stack[top]->level)
                     stack[top]->right->level = stack[top]->level; // if it's >, then it's definately not 0, thus not NULL
-                
+
                 if(stack[top])
                 {
                     stack[top] = _sgTreeNodeSkew(stack[top]);
@@ -218,7 +218,7 @@ SGTreeNode* SG_EXPORT _sgTreeNodeRemove(SGTree* tree, SGTreeNode* root, SGTreeNo
                         stack[top]->right = _sgTreeNodeSplit(stack[top]->right);
                 }
             }
-            
+
             if(top)
             {
                 if(cmp < 0)
@@ -270,7 +270,19 @@ SGTreeNode* SG_EXPORT sgTreeFindItem(SGTree* tree, void* item)
     return node;
 }
 
-SGTreeNode* SG_EXPORT sgTreeInsert(SGTree* tree, void* item);
+SGTreeNode* SG_EXPORT sgTreeInsert(SGTree* tree, void* item)
+{
+    SGTreeNode* node = malloc(sizeof(SGTreeNode));
+    if(!node)
+        return NULL;
+    //node->parent = NULL;
+    node->left = NULL;
+    node->right = NULL;
+    node->level = 1;
+    node->item = item;
+    tree->root = _sgTreeNodeInsert(tree, tree->root, node);
+    return node;
+}
 
 void SG_EXPORT sgTreeRemoveNode(SGTree* tree, SGTreeNode* node)
 {
