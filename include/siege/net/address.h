@@ -46,7 +46,7 @@ typedef struct SGAddress
  * Params:
  *   addr = either 'a.b.c.d' or 'a::b::c::d::e' or a hostname to
  *          be resolved.
- *   port = the port number to connect through. Can be SG_PORT_ANY.
+ *   port = the port number to connect through. May be SG_PORT_ANY.
  */
 SGAddress* SG_EXPORT sgAddressCreate(const char* addr, SGushort port);
 
