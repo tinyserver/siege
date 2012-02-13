@@ -32,11 +32,9 @@ typedef struct SGAddress
     
     /**
      * The address representation.
-     * One of these will be invalid, depending on the value of
-     * the ipv field.
+     * If SG_IP4_ADDRESS, only the first four bytes are relevant.
      */
-    SGuint ip4Addr;
-    SGubyte ip6Addr[16];
+    SGubyte address[16];
     
     SGushort port;
 } SGAddress;
