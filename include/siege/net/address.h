@@ -44,7 +44,7 @@ typedef struct SGAddress
 /**
  * Create a new SGAddress.
  * Params:
- *   addr = either 'a.b.c.d' or 'a::b::c::d::e' or a hostname to
+ *   addr = either 'a.b.c.d' or 'a:b:c:d:e:f:g:h' or a hostname to
  *          be resolved.
  *   port = the port number to connect through. May be SG_PORT_ANY.
  */
