@@ -11,7 +11,7 @@ enum
 {
     SG_IP4_ADDRESS,
     SG_IP6_ADDRESS,
-}
+};
 
 /**
  * Used in place of a port to indicate any port may be used.
