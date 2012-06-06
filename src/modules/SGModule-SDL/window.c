@@ -14,7 +14,7 @@
 
 #include "main.h"
 #include "window.h"
-//#include "joystick.h"
+#include "joystick.h"
 #include "keyboard.h"
 #include "mouse.h"
 
@@ -95,7 +95,7 @@ SGuint SG_EXPORT sgmCoreWindowOpen(void* window, SGuint width, SGuint height, SG
 
     cwindow->surface = SDL_SetVideoMode(width, height, bpp, sdlflags);
     cwindow->opened = SG_TRUE;
-
+    
     windowOpen();
     windowResize(width, height);
 
@@ -220,7 +220,7 @@ SGuint SG_EXPORT sgmCoreWindowSwapBuffers(void* window)
         return SG_OK;
 
     SDL_Event event;
-
+    
     while (SDL_PollEvent(&event))
     {
         switch(event.type)
@@ -267,6 +267,14 @@ SGuint SG_EXPORT sgmCoreWindowSwapBuffers(void* window)
                 mouseMove(event.motion.x, event.motion.y);
                 break;
 
+            case SDL_JOYAXISMOTION:
+            case SDL_JOYBALLMOTION:
+            case SDL_JOYHATMOTION:
+                break;
+            case SDL_JOYBUTTONDOWN:
+            case SDL_JOYBUTTONUP:
+                break;
+                
             case SDL_QUIT:
                 sgmCoreWindowClose(window);
                 return SG_OK;
