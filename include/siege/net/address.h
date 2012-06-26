@@ -10,7 +10,7 @@ extern "C" {
 enum
 {
     SG_IP4_ADDRESS,
-    SG_IP6_ADDRESS,
+    SG_IP6_ADDRESS
 };
 
 /**
