@@ -41,8 +41,8 @@ SGSocket* SG_EXPORT sgSocketAccept(void);
 SGvoid SG_EXPORT sgSocketShutdown(SGenum how);
 SGvoid SG_EXPORT sgSocketClose();
 
-SGint SG_EXPORT sgSocketSend(char* buf, SGint buflen);
-SGint SG_EXPORT sgSocketRecv(char* buf, SGint maxbuf, SGint* buflen)
+SGint SG_EXPORT sgSocketSend(SGubyte* buf, SGint buflen);
+SGint SG_EXPORT sgSocketRecv(SGubyte* buf, SGint maxbuf, SGint* buflen)
 
 SGvoid SG_EXPORT sgSocketKeepAlive(SGint time, SGint interval);
 
