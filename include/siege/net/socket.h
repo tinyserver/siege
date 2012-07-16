@@ -27,24 +27,24 @@ typedef struct SGSocket
 } SGSocket;
 
 SGSocket* SG_EXPORT sgSocketCreate(SGenum addressType, SGenum socketType);
-void SG_EXPORT sgSocketDestroy(SGSocket* handle);
+void SG_EXPORT sgSocketDestroy(SGSocket* socket);
 
-void SG_EXPORT sgSocketSetBlocking(SGSocket* handle, SGbool blocking);
-SGbool SG_EXPORT sgSocketGetBlocking(SGSocket* handle);
+void SG_EXPORT sgSocketSetBlocking(SGSocket* socket, SGbool blocking);
+SGbool SG_EXPORT sgSocketGetBlocking(SGSocket* socket);
 
-SGbool SG_EXPORT sgSocketIsAlive(SGSocket* handle);
+SGbool SG_EXPORT sgSocketIsAlive(SGSocket* socket);
 
-SGvoid SG_EXPORT sgSocketBind(SGAddress* address);
-SGvoid SG_EXPORT sgSocketConnect(SGAddress* address);
-SGvoid SG_EXPORT sgSocketListen(SGint backlog);
-SGSocket* SG_EXPORT sgSocketAccept(void);
-SGvoid SG_EXPORT sgSocketShutdown(SGenum how);
-SGvoid SG_EXPORT sgSocketClose();
+SGvoid SG_EXPORT sgSocketBind(SGSocket* socket, SGAddress* address);
+SGvoid SG_EXPORT sgSocketConnect(SGSocket* socket, SGAddress* address);
+SGvoid SG_EXPORT sgSocketListen(SGSocket* socket, SGint backlog);
+SGSocket* SG_EXPORT sgSocketAccept(SGSocket* socket);
+SGvoid SG_EXPORT sgSocketShutdown(SGSocket* socket, SGenum how);
+SGvoid SG_EXPORT sgSocketClose(SGSocket* socket);
 
-SGint SG_EXPORT sgSocketSend(SGubyte* buf, SGint buflen);
-SGint SG_EXPORT sgSocketRecv(SGubyte* buf, SGint maxbuf, SGint* buflen)
+SGint SG_EXPORT sgSocketSend(SGSocket* socket, SGubyte* buf, SGint buflen);
+SGint SG_EXPORT sgSocketRecv(SGSocket* socket, SGubyte* buf, SGint maxbuf, SGint* buflen)
 
-SGvoid SG_EXPORT sgSocketKeepAlive(SGint time, SGint interval);
+SGvoid SG_EXPORT sgSocketKeepAlive(SGSocket* socket, SGint time, SGint interval);
 
 #ifdef __cplusplus
 }
