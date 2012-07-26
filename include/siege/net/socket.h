@@ -56,6 +56,8 @@ enum
 SGSocket* SG_EXPORT sgSocketCreate(SGenum addressType, SGenum socketType);
 /// Release the memory for a socket. Calls sgSocketClose if needed.
 void SG_EXPORT sgSocketDestroy(SGSocket* socket);
+/// Creates a pair of interconnected sockets.
+void SG_EXPORT sgSocketPair(SGSocket** a, SGSocket** b);
 
 /// Set the blocking status of the given socket.
 void SG_EXPORT sgSocketSetBlocking(SGSocket* socket, SGbool blocking);
