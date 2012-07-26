@@ -8,6 +8,22 @@ extern "C" {
 #include "../common.h"
 #include "address.h"
 
+typedef struct SGSocket
+{
+} SGSocket;
+
+typedef struct SGSocketSet
+{
+} SGSocketSet;
+
+SGSocketSet* SG_EXPORT sgSocketSetCreate(SGuint capacity);
+void SG_EXPORT sgSocketSetDestroy(SGSocketSet* socketSet);
+void SG_EXPORT sgSocketSetReset(SGSocketSet* socketSet);
+void SG_EXPORT sgSocketSetAdd(SGSocketSet* socketSet, SGSocket* socket);
+void SG_EXPORT sgSocketSetRemove(SGSocketSet* socketSet, SGSocket* socket);
+SGbool SG_EXPORT sgSocketSetInSet(SGSocketSet* socketSet, SGSocket* socket);
+SGuint SG_EXPORT sgSocketSetGetCapacity(SGSocketSet* socketSet);
+
 enum
 {
     SG_SOCKET_STREAM,
@@ -21,10 +37,6 @@ enum
     SG_SHUTDOWN_SEND,
     SG_SHUTDOWN_BOTH
 };
-
-typedef struct SGSocket
-{
-} SGSocket;
 
 /// Create a socket. Defaults to blocking.
 SGSocket* SG_EXPORT sgSocketCreate(SGenum addressType, SGenum socketType);
