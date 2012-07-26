@@ -119,7 +119,7 @@ SGvoid SG_EXPORT sgSocketClose(SGSocket* socket);
  * Returns: the actual amount of data sent.
  *          Less than zero on error.
  */
-SGint SG_EXPORT sgSocketSend(SGSocket* socket, SGubyte* buf, SGint buflen);
+SGint SG_EXPORT sgSocketSend(SGSocket* socket, SGubyte* buf, size_t buflen);
 
 /**
  * Receive data from the given socket.
@@ -135,7 +135,7 @@ SGint SG_EXPORT sgSocketSend(SGSocket* socket, SGubyte* buf, SGint buflen);
  *          Zero if the remote closed the connection. 
  *          Less than zero on an error.
  */
-SGint SG_EXPORT sgSocketRecv(SGSocket* socket, SGubyte* buf, SGint maxbuf)
+SGint SG_EXPORT sgSocketRecv(SGSocket* socket, SGubyte* buf, size_t maxbuf)
 
 #ifdef __cplusplus
 }
