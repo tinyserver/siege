@@ -16,12 +16,26 @@ typedef struct SGSocketSet
 {
 } SGSocketSet;
 
+/**
+ * Create a socket set while specifying the capacity of the underlying fd_set.
+ * The meaning of capacity differs on different platforms:
+ *   * On POSIX platforms, capacity specifies the highest file descriptor
+ *     that can be stored. fd_set is a bit array of file descriptors.
+ *   * On Windows, capacity refers to the maximum number of sockets that
+ *     can be stored. fd_set is an array of socket handles.
+ */
 SGSocketSet* SG_EXPORT sgSocketSetCreate(SGuint capacity);
+/// Release the resources associated with a given socket set.
 void SG_EXPORT sgSocketSetDestroy(SGSocketSet* socketSet);
+/// Remove all sockets from the socket set.
 void SG_EXPORT sgSocketSetReset(SGSocketSet* socketSet);
+/// Add a given socket to the socket set.
 void SG_EXPORT sgSocketSetAdd(SGSocketSet* socketSet, SGSocket* socket);
+/// Remove a given socket from the socket set.
 void SG_EXPORT sgSocketSetRemove(SGSocketSet* socketSet, SGSocket* socket);
+/// Returns SG_TRUE if the given socket is in the socket set.
 SGbool SG_EXPORT sgSocketSetInSet(SGSocketSet* socketSet, SGSocket* socket);
+/// Returns the capacity (see sgSocketSetCreate) for the socket set.
 SGuint SG_EXPORT sgSocketSetGetCapacity(SGSocketSet* socketSet);
 
 enum
