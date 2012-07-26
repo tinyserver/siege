@@ -74,7 +74,7 @@ SGvoid SG_EXPORT sgSocketConnect(SGSocket* socket, SGAddress* address);
  *   socket = the socket to listen on.
  *   backlog = how many connections to queue until they're accepted.
  */
-SGvoid SG_EXPORT sgSocketListen(SGSocket* socket, SGint backlog);
+SGvoid SG_EXPORT sgSocketListen(SGSocket* socket, SGuint backlog);
 
 /**
  * Wait for a socket to change status.
