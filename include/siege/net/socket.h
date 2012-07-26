@@ -17,9 +17,9 @@ enum
 /// How a socket is shutdown; what is/are disallowed.
 enum
 {
-    SG_SOCKET_SHUTDOWN_RECEIVE,
-    SG_SOCKET_SHUTDOWN_SEND,
-    SG_SOCKET_SHUTDOWN_BOTH
+    SG_SHUTDOWN_RECV,
+    SG_SHUTDOWN_SEND,
+    SG_SHUTDOWN_BOTH
 };
 
 typedef struct SGSocket
