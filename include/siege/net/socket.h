@@ -75,6 +75,27 @@ SGvoid SG_EXPORT sgSocketConnect(SGSocket* socket, SGAddress* address);
  *   backlog = how many connections to queue until they're accepted.
  */
 SGvoid SG_EXPORT sgSocketListen(SGSocket* socket, SGint backlog);
+
+/**
+ * Wait for a socket to change status.
+ * *Select    = timeout in seconds.
+ * *NSelect   = timeout in nanoseconds.
+ * *USelect   = timeout in microseconds.
+ * *MSelect   = timeout in milliseconds.
+ * *MaxSelect = use the maximum timeout.
+ *
+ * Returns the number of sockets with status changes. 0 if timeout, -1 on an interruption.
+ * Otherwise, the SGSocketSets are updated to contain only the sockets having status changes.
+ * For a connecting socket, a write status change means the connection is established and it's able to send. 
+ * For a listening socket, a read status change means there is an incoming connection request and it's able to accept.
+ */
+
+SGint SG_EXPORT sgSocketSelect(SGSocketSet* checkRead, SGSocketSet* checkWrite, SGSocketSet* checkError, SGulong timeout);
+SGint SG_EXPORT sgSocketNSelect(SGSocketSet* checkRead, SGSocketSet* checkWrite, SGSocketSet* checkError, SGulong timeout);
+SGint SG_EXPORT sgSocketUSelect(SGSocketSet* checkRead, SGSocketSet* checkWrite, SGSocketSet* checkError, SGulong timeout);
+SGint SG_EXPORT sgSocketMSelect(SGSocketSet* checkRead, SGSocketSet* checkWrite, SGSocketSet* checkError, SGulong timeout);
+SGint SG_EXPORT sgSocketMaxSelect(SGSocketSet* checkRead, SGSocketSet* checkWrite, SGSocketSet* checkError);
+
 /**
  * Accept an incoming connection.
  *
