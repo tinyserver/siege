@@ -11,12 +11,10 @@
  * If you did not recieve the file with this program, please email
  * Tim Chas <darkuranium@gmail.com>.
  */
-
-#ifndef __MAIN_H__
-#define __MAIN_H__
+#ifndef __COMMON_H__
+#define __COMMON_H__
 
 #include <siege/backend.h>
+#include <IL/il.h>
 
-#include "stb_truetype.h"
-
-#endif // __MAIN_H__
+#endif // __COMMON_H__

@@ -12,16 +12,12 @@
  * Tim Chas <darkuranium@gmail.com>.
  */
 
-#ifndef __LOAD_H__
-#define __LOAD_H__
+#ifndef __COMMON_H__
+#define __COMMON_H__
 
-#include "stb_truetype.h"
+#include <siege/backend.h>
+#include <SDL/SDL.h>
 
-typedef struct FontFace
-{
-    stbtt_fontinfo info;
-    void* buf;
-    float height;
-} FontFace;
+SGbool useGL;
 
-#endif // __LOAD_H__
+#endif // __COMMON_H__

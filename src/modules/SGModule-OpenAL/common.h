@@ -12,12 +12,15 @@
  * Tim Chas <darkuranium@gmail.com>.
  */
 
-#ifndef __KEYBOARD_H__
-#define __KEYBOARD_H__
+#ifndef __COMMON_H__
+#define __COMMON_H__
 
-#include "common.h"
+#include <siege/backend.h>
 
-void GLFWCALL keyboardKey(int key, int down);
-void GLFWCALL keyboardChar(int chr, int down);
+#include <al.h>
+#include <alc.h>
 
-#endif // __KEYBOARD_H__
+ALCdevice* device;
+ALCcontext* context;
+
+#endif // __COMMON_H__

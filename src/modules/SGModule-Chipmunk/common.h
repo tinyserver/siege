@@ -5,19 +5,23 @@
  * This file is part of libSIEGE.
  *
  * This software is copyrighted work licensed under the terms of the
- * 2-clause BSD license. Please consult the file "COPYING.txt" for
+ * 2-clause BSD license. Please consult the file "license.txt" for
  * details.
  *
  * If you did not recieve the file with this program, please email
  * Tim Chas <darkuranium@gmail.com>.
  */
 
-#ifndef __KEYBOARD_H__
-#define __KEYBOARD_H__
+#ifndef __COMMON_H__
+#define __COMMON_H__
 
-#include "common.h"
+#include <siege/backend.h>
+#include <chipmunk/chipmunk.h>
 
-void GLFWCALL keyboardKey(int key, int down);
-void GLFWCALL keyboardChar(int chr, int down);
+typedef struct DataExt
+{
+    SGenum type;
+    void* data;
+} DataExt;
 
-#endif // __KEYBOARD_H__
+#endif // __COMMON_H__
