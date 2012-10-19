@@ -1,5 +1,5 @@
-#ifndef _SIEGE_NET_SOCKET_H_
-#define _SIEGE_NET_SOCKET_H_
+#ifndef __SIEGE_UTIL_NET_SOCKET_H__
+#define __SIEGE_UTIL_NET_SOCKET_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -143,4 +143,4 @@ SGint SG_EXPORT sgSocketRecv(SGSocket* socket, SGubyte* buf, size_t maxbuf)
 }
 #endif  // __cplusplus
 
-#endif  // _SIEGE_NET_SOCKET_H_
+#endif  // __SIEGE_UTIL_NET_SOCKET_H__

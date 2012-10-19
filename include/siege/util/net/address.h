@@ -1,5 +1,5 @@
-#ifndef _SIEGE_NET_ADDRESS_H_
-#define _SIEGE_NET_ADDRESS_H_
+#ifndef __SIEGE_UTIL_NET_ADDRESS_H__
+#define __SIEGE_UTIL_NET_ADDRESS_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -54,4 +54,4 @@ void SG_EXPORT sgAddressDestroy(SGAddress*);
 }
 #endif  // __cplusplus
 
-#endif  // _SIEGE_NET_ADDRESS_H_
+#endif  // __SIEGE_UTIL_NET_ADDRESS_H__
