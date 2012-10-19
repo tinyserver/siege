@@ -8,6 +8,13 @@ extern "C" {
 #include "../../common.h"
 #include "address.h"
 
+#define SG_SOCK_STREAM 0
+#define SG_SOCK_DGRAM  1
+
+#define SG_SHUT_RECV 0x01
+#define SG_SHUT_SEND 0x02
+#define SG_SHUT_BOTH 0x04
+
 typedef struct SGSocket
 {
 } SGSocket;
@@ -15,6 +22,11 @@ typedef struct SGSocket
 typedef struct SGSocketSet
 {
 } SGSocketSet;
+
+#ifdef SG_BUILD_LIBRARY
+SGbool _sgSocketInit(void);
+SGbool _sgSocketDeinit(void);
+#endif /* SG_BUILD_LIBRARY */
 
 /**
  * Create a socket set while specifying the capacity of the underlying fd_set.
@@ -37,20 +49,6 @@ void SG_EXPORT sgSocketSetRemove(SGSocketSet* socketSet, SGSocket* socket);
 SGbool SG_EXPORT sgSocketSetInSet(SGSocketSet* socketSet, SGSocket* socket);
 /// Returns the capacity (see sgSocketSetCreate) for the socket set.
 SGuint SG_EXPORT sgSocketSetGetCapacity(SGSocketSet* socketSet);
-
-enum
-{
-    SG_SOCKET_STREAM,
-    SG_SOCKET_DGRAM
-};
-
-/// How a socket is shutdown; what is/are disallowed.
-enum
-{
-    SG_SHUTDOWN_RECV,
-    SG_SHUTDOWN_SEND,
-    SG_SHUTDOWN_BOTH
-};
 
 /// Create a socket. Defaults to blocking.
 SGSocket* SG_EXPORT sgSocketCreate(SGenum addressType, SGenum socketType);
@@ -81,9 +79,9 @@ void SG_EXPORT sgSocketListen(SGSocket* socket, SGuint backlog);
 /**
  * Wait for a socket to change status.
  * *Select    = timeout in seconds.
- * *NSelect   = timeout in nanoseconds.
- * *USelect   = timeout in microseconds.
  * *MSelect   = timeout in milliseconds.
+ * *USelect   = timeout in microseconds.
+ * *NSelect   = timeout in nanoseconds.
  * *MaxSelect = use the maximum timeout.
  *
  * Returns the number of sockets with status changes. 0 if timeout, -1 on an interruption.
@@ -93,9 +91,9 @@ void SG_EXPORT sgSocketListen(SGSocket* socket, SGuint backlog);
  */
 
 SGint SG_EXPORT sgSocketSelect(SGSocketSet* checkRead, SGSocketSet* checkWrite, SGSocketSet* checkError, SGulong timeout);
-SGint SG_EXPORT sgSocketNSelect(SGSocketSet* checkRead, SGSocketSet* checkWrite, SGSocketSet* checkError, SGulong timeout);
-SGint SG_EXPORT sgSocketUSelect(SGSocketSet* checkRead, SGSocketSet* checkWrite, SGSocketSet* checkError, SGulong timeout);
 SGint SG_EXPORT sgSocketMSelect(SGSocketSet* checkRead, SGSocketSet* checkWrite, SGSocketSet* checkError, SGulong timeout);
+SGint SG_EXPORT sgSocketUSelect(SGSocketSet* checkRead, SGSocketSet* checkWrite, SGSocketSet* checkError, SGulong timeout);
+SGint SG_EXPORT sgSocketNSelect(SGSocketSet* checkRead, SGSocketSet* checkWrite, SGSocketSet* checkError, SGulong timeout);
 SGint SG_EXPORT sgSocketMaxSelect(SGSocketSet* checkRead, SGSocketSet* checkWrite, SGSocketSet* checkError);
 
 /**

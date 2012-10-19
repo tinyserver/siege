@@ -7,11 +7,15 @@ extern "C" {
 
 #include "../../common.h"
 
-enum
-{
-    SG_IP4_ADDRESS,
-    SG_IP6_ADDRESS
-};
+#define SG_AF_UNSPEC 0
+#define SG_AF_IP4    4
+#define SG_AF_IP6    6
+// aliases
+#define SG_AF_INET   SG_AF_IP4
+#define SG_AF_INET4  SG_AF_IP4
+#define SG_AF_INET6  SG_AF_IP6
+
+#define SG_AI_PASSIVE   0x01
 
 /**
  * Used in place of a port to indicate any port may be used.
@@ -25,30 +29,41 @@ typedef struct SGAddress
 {
     /**
      * The IP protocol version of this address. One of:
-     *   SG_IP4_ADDRESS
-     *   SG_IP6_ADDRESS
+     *   SG_AF_IP4
+     *   SG_AF_IP6
      */
-    SGenum ipv;
+    SGenum family;
     
     /**
      * The address representation.
      * If SG_IP4_ADDRESS, only the first four bytes are relevant.
      */
-    SGubyte address[16];
+    union
+    {
+        SGubyte ptr[16];
+        SGuint  ip4;
+        SGulong ip6[2];
+    } addr;
     
     SGushort port;
 } SGAddress;
 
+SGAddress* SG_EXPORT sgAddressCreate4v(const void* ptr, SGushort port);
+SGAddress* SG_EXPORT sgAddressCreate4(SGuint ip4, SGushort port);
+SGAddress* SG_EXPORT sgAddressCreate6v(const void* ptr, SGushort port);
+SGAddress* SG_EXPORT sgAddressCreate6(const SGulong ip6[2], SGushort port);
 /**
  * Create a new SGAddress.
  * Params:
- *   addr = either 'a.b.c.d' or 'a:b:c:d:e:f:g:h' or a hostname to
+ *   str = either 'a.b.c.d' or 'a:b:c:d:e:f:g:h' or a hostname to
  *          be resolved.
  *   port = the port number to connect through. May be SG_PORT_ANY.
  */
-SGAddress* SG_EXPORT sgAddressCreate(const char* addr, SGushort port);
+SGAddress* SG_EXPORT sgAddressCreateHost(const char* host, SGushort port, SGenum flags);
 
-void SG_EXPORT sgAddressDestroy(SGAddress*);
+void SG_EXPORT sgAddressDestroy(SGAddress* addr);
+
+SGbool SG_EXPORT sgAddressToString(SGAddress* addr, char* buf, size_t buflen, SGbool cport);
 
 #ifdef __cplusplus
 }
