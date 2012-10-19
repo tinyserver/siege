@@ -58,6 +58,8 @@
 #include "physics/shape.h"
 #include "physics/space.h"
 #include "util/file/json.h"
+#include "util/net/address.h"
+#include "util/net/socket.h"
 #include "util/thread/key.h"
 #include "util/thread/mutex.h"
 #include "util/thread/semaphore.h"

@@ -5,7 +5,7 @@
 extern "C" {
 #endif  // __cplusplus
 
-#include "../common.h"
+#include "../../common.h"
 #include "address.h"
 
 typedef struct SGSocket
@@ -66,9 +66,9 @@ SGbool SG_EXPORT sgSocketGetBlocking(SGSocket* socket);
 /// Returns: true if this is a valid, living socket.
 SGbool SG_EXPORT sgSocketIsAlive(SGSocket* socket);
 /// Associate an address with this socket.
-SGvoid SG_EXPORT sgSocketBind(SGSocket* socket, SGAddress* address);
+void SG_EXPORT sgSocketBind(SGSocket* socket, SGAddress* address);
 /// Connect to an address. If socket is blocking, this waits until the connection is established.
-SGvoid SG_EXPORT sgSocketConnect(SGSocket* socket, SGAddress* address);
+void SG_EXPORT sgSocketConnect(SGSocket* socket, SGAddress* address);
 /**
  * Listen for an incoming connection.
  * An address must have been associated with the socket with sgSocketBind.
@@ -76,7 +76,7 @@ SGvoid SG_EXPORT sgSocketConnect(SGSocket* socket, SGAddress* address);
  *   socket = the socket to listen on.
  *   backlog = how many connections to queue until they're accepted.
  */
-SGvoid SG_EXPORT sgSocketListen(SGSocket* socket, SGuint backlog);
+void SG_EXPORT sgSocketListen(SGSocket* socket, SGuint backlog);
 
 /**
  * Wait for a socket to change status.
@@ -105,9 +105,9 @@ SGint SG_EXPORT sgSocketMaxSelect(SGSocketSet* checkRead, SGSocketSet* checkWrit
  */
 SGSocket* SG_EXPORT sgSocketAccept(SGSocket* socket);
 /// Disable sends and recvs from this socket.
-SGvoid SG_EXPORT sgSocketShutdown(SGSocket* socket, SGenum how);
+void SG_EXPORT sgSocketShutdown(SGSocket* socket, SGenum how);
 /// Drop connections from this socket. Calling sgSocketShutdown is recommended.
-SGvoid SG_EXPORT sgSocketClose(SGSocket* socket);
+void SG_EXPORT sgSocketClose(SGSocket* socket);
 
 /**
  * Sends data out on the given socket.
@@ -137,7 +137,7 @@ SGint SG_EXPORT sgSocketSend(SGSocket* socket, SGubyte* buf, size_t buflen);
  *          Zero if the remote closed the connection. 
  *          Less than zero on an error.
  */
-SGint SG_EXPORT sgSocketRecv(SGSocket* socket, SGubyte* buf, size_t maxbuf)
+SGint SG_EXPORT sgSocketRecv(SGSocket* socket, SGubyte* buf, size_t maxbuf);
 
 #ifdef __cplusplus
 }

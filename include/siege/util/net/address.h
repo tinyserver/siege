@@ -5,7 +5,7 @@
 extern "C" {
 #endif  // __cplusplus
 
-#include "../common.h"
+#include "../../common.h"
 
 enum
 {
