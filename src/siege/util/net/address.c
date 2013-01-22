@@ -12,6 +12,11 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #else
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/ip.h>
+#include <arpa/inet.h>
+#include <netdb.h>
 #endif /* WIN32 */
 
 static SGAddress* _sgAddressCreate(SGenum family, const void* ptr, SGushort port)
